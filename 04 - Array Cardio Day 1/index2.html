@@ -38,75 +38,87 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
-    const inv15 = inventors.filter(inv => (inv.year >= 1500 && inv.year < 1600));
-
-    console.table(inv15);
+    const inventors1500 = inventors.filter((el) => (el.year >= 1500 && el.year < 1600))
+    console.log("1. Filter: list of inventors born in 1500's")
+    console.table(inventors1500);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
-    const invName = inventors.map(el => `${el.first} ${el.last}`);
-
-    console.table(invName);
+    const inventorNames = inventors.map((el) => el.first + " " + el.last)
+    console.log("2. Map: Inventors' full name")
+    console.log(inventorNames);
 
     // Array.prototype.sort()
-    // 3. Sort the inventors by birthdate, oldest to youngest
+    // 3. Sort the inventors by birthdate, oldest to youngest    
 
-    const invBirth = inventors.sort((a, b) => a.year - b.year)
+    const inventorsBirthOrder = inventors.sort((a, b) => a.year - b.year);
 
-    console.table(invBirth);
+    console.log("3. Sort: Inventors by birth, oldest to youngest")
+    console.table(inventorsBirthOrder);
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
-    const invSum = inventors.reduce((total, inv) => total + (inv.passed - inv.year), 0);
+    const inventorsTotalYears = inventors.reduce((prev, el) => prev + (el.passed - el.year), 0)
 
-    console.log(invSum);
+    console.log("4. Reduce: Inventors total age")
+    console.log(inventorsTotalYears);
 
     // 5. Sort the inventors by years lived
 
-    const invAscending = inventors.sort((a, b) => (a.passed - a.year) - (b.passed - b.year));
+    const inventorsByYearsLived = inventors.sort((a, b) => (a.passed - a.year) - (b.passed - b.year))
 
-    const invDescending = inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
+    console.log("5. Sort: Inventors by years lived")
+    console.table(inventorsByYearsLived);
 
-    console.table(invAscending);
-    console.table(invDescending);
+    // Checking:
+
+    const yearsLived = inventorsByYearsLived.map (el => el.passed - el.year);
+    console.log(yearsLived);
+
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    const links = document.querySelectorAll(".mw-category a");
+    const de = [...links]
+        .map(link => link.textContent)
+        .filter(name => name.includes("de"));
+
+    // or:
+
+    // const links = [...document.querySelectorAll(".mw-category a")];
+    // const de = links.map(link => link.textContent).filter(name => name.includes("de"));
+
+    // // or:
+
+    // const links = Array.from(document.querySelectorAll(".mw-category a"));
+    // const de = links.map(link => link.textContent).filter(name => name.includes("de"));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
-    const sortLastname = people.sort();
+    const peopleByLastName = people.sort();
 
-    function switchName(name) {
-        const nameArr = name.split(", ");
-        return `${nameArr[1]} ${nameArr[0]}`;
-    }
-
-    const sortFirstname = people.sort((a, b) => {
-        const switchedA = switchName(a);
-        const switchedB = switchName(b);
-        return (switchedA > switchedB)? 1 : -1;
-    })
-
-    console.table(sortLastname);
-    console.table(sortFirstname)
+    console.log("7. Sort: People by last name")
+    console.table(peopleByLastName);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
-    const vehicle = data.reduce((summary, val) => {
-        if (!(val in summary)) {
-            summary[val] = 0;
-        } 
-        summary[val] += 1;
-        return summary;
+    const itemAmount = data.reduce((obj, el) => {
+        if (obj[el]) {
+            obj[el] += 1;
+        } else {
+            obj[el] = 1;
+        }
+        return obj;
     }, {})
 
-    console.log(vehicle);
+    console.log("8. Sum of each instances")
+    console.table(itemAmount);
 
   </script>
 </body>
